@@ -48,6 +48,7 @@ class neutron::agents::f5-bigip-lbaas (
   #$user_group             = 'nogroup',
   #$manage_haproxy_package = true,
   $agent_cfg               = '',
+  $primary_controller      = false,
 ) {
 
   include neutron::params
@@ -93,7 +94,7 @@ class neutron::agents::f5-bigip-lbaas (
 
   Anchor['neutron-f5-bigip-lbaas'] ->
     Neutron_l3_agent_config <| |> ->
-          Service<| title=='neutron-f5-bigip-lbaas' |>  ->
+          Service<| title=='neutron-f5-bigip-lbaas-service' |>  ->
               Anchor['neutron-f5-bigip-lbaas-done']
 
   #if $::neutron::params::lbaas_agent_package {
@@ -168,8 +169,8 @@ class neutron::agents::f5-bigip-lbaas (
         provided_by     => 'mirantis',
         primitive_type  => 'neutron-agent-f5',
         parameters      => {
-          'debug'       => $debug,
-          'syslog'      => $::use_syslog,
+          #'debug'       => $debug,
+          #'syslog'      => $::use_syslog,
           'os_auth_url' => $neutron_config['keystone']['auth_url'],
           'tenant'      => $neutron_config['keystone']['admin_tenant_name'],
           'username'    => $neutron_config['keystone']['admin_user'],
@@ -218,7 +219,7 @@ class neutron::agents::f5-bigip-lbaas (
       #  ],
       #}
 
-      Service['neutron-f5-bigip-lbaas-init_stopped'] ->
+      Service['neutron-f5-bigip-lbaas-service-init_stopped'] ->
         Cs_resource["p_${::neutron::params::f5_bigip_lbaas_agent_service}"] ->
            Service['neutron-f5-bigip-lbaas-service']
 
@@ -248,7 +249,7 @@ class neutron::agents::f5-bigip-lbaas (
       ensure     => stopped,
       hasstatus  => true,
       hasrestart => true,
-      provider   => 'generic',
+    #  provider   => 'generic',
     }
 
     service { 'neutron-f5-bigip-lbaas-service':
@@ -260,7 +261,7 @@ class neutron::agents::f5-bigip-lbaas (
       provider   => "pacemaker",
     }
 
-}
+#}
 # else {
 #    # No pacemaker use
 #    Neutron_config <| |> ~> Service['neutron-l3']
