@@ -27,7 +27,7 @@ Puppet::Type.type(:rabbitmq_user).provide(:rabbitmqctl) do
   end
 
   def exists?
-    out = rabbitmqctl('list_users').split(/\n/)[1..-2].detect do |line|
+    out = rabbitmqctl('-q','list_users').split(/\n/).detect do |line|
       line.match(/^#{Regexp.escape(resource[:name])}(\s+\S+|)$/)
     end
   end
