@@ -32,6 +32,10 @@ class openstack::ha::haproxy (
   class { 'openstack::ha::glance': }
   class { 'openstack::ha::cinder': }
 
+  ## Configure HAProxy stuff for LDAP
+  ## TODO: should depends on `use_ldap` param
+  class { 'openstack::ha::ldap': }
+
   if $neutron { class { 'openstack::ha::neutron': } }
   if $queue_provider == 'rabbitmq' { class { 'openstack::ha::rabbitmq': } }
 
