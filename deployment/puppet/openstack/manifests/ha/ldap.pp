@@ -8,12 +8,12 @@ class openstack::ha::ldap {
     public          => false,
     #require_service => 'slapd',
     mode            => 'tcp',
-  }
     haproxy_config_options => {
       'option'  => ['socket-stats', 'tcpka'],
       'timeout' => ['client 5s', 'server 2s', 'connect 1s'],
     },
     
     balancermember_options => 'check fall 1 rise 1 inter 2s',
+  }
 
 }
