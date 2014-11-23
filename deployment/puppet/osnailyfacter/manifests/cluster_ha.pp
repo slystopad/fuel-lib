@@ -129,8 +129,8 @@ class osnailyfacter::cluster_ha {
     $cinder_hash     = $cinder_hash_raw
     $ceilometer_hash = $ceilometer_hash_raw
     $heat_hash       = $heat_hash_raw
-    $murano_hash       = $heat_hash_raw
-    $sahara_hash       = $heat_hash_raw
+    $murano_hash     = $murano_hash_raw
+    $sahara_hash     = $sahara_hash_raw
   }
 
   if !$rabbit_hash['user'] {
