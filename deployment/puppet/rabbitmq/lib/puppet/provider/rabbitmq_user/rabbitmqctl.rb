@@ -58,3 +58,41 @@ Puppet::Type.type(:rabbitmq_user).provide(:rabbitmqctl) do
   end
 
 end
+erhaps you are running on an older version of rabbitmq that does not support admin users?)"
+    end
+  end
+
+  def admin=(state)
+    if state == :true
+      make_user_admin()
+    else
+      usertags = get_user_tags
+      usertags.delete('administrator')
+      rabbitmqctl('set_user_tags', resource[:name], usertags.entries.sort)
+    end
+  end
+
+  def set_user_tags(tags)
+    is_admin = get_user_tags().member?("administrator") \
+               || resource[:admin] == :true
+    usertags = Set.new(tags)
+    if is_admin
+      usertags.add("administrator")
+    end
+    rabbitmqctl('set_user_tags', resource[:name], usertags.entries.sort)
+  end
+
+  def make_user_admin
+    usertags = get_user_tags
+    usertags.add('administrator')
+    rabbitmqctl('set_user_tags', resource[:name], usertags.entries.sort)
+  end
+
+  private
+  def get_user_tags
+    match = rabbitmqctl('-q', 'list_users').split(/\n/).collect do |line|
+      line.match(/^#{Regexp.escape(resource[:name])}\s+\[(.*?)\]/)
+    end.compact.first
+    Set.new(match[1].split(/, /)) if match
+  end
+end

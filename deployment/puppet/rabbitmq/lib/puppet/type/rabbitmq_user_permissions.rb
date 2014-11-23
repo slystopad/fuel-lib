@@ -55,3 +55,8 @@ Puppet::Type.newtype(:rabbitmq_user_permissions) do
   end
 
 end
+Error, "Invalid regexp #{value}"
+    end
+  end
+
+end
