@@ -58,9 +58,7 @@ class keystone::roles::admin(
     description => 'admin tenant',
   }
 
-  ## ???
-  #keystone_role { ['admin', 'Member']:
-  keystone_role { ['admin', 'member']:
+  keystone_role { ['admin', 'Member']:
     ensure => present,
   }
   keystone_user_role { "${admin}@${admin_tenant}":
