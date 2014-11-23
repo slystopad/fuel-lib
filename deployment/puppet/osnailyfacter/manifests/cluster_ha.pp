@@ -37,19 +37,31 @@ class osnailyfacter::cluster_ha {
   if !$::fuel_settings['sahara'] {
     $sahara_hash={}
   } else {
-    $sahara_hash = $::fuel_settings['sahara']
+    if ! $::fuel_settings['keystone_ldap']['use_ldap'] {
+      $sahara_hash = $::fuel_settings['sahara']
+    } else {
+      $sahara_hash_raw = $::fuel_settings['sahara']
+    }
   }
 
   if !$::fuel_settings['murano'] {
     $murano_hash = {}
   } else {
-    $murano_hash = $::fuel_settings['murano']
+    if ! $::fuel_settings['keystone_ldap']['use_ldap'] {
+      $murano_hash = $::fuel_settings['murano']
+    } else {
+      $murano_hash_raw = $::fuel_settings['murano']
+    }
   }
 
   if !$::fuel_settings['heat'] and !$::fuel_settings['keystone_ldap']['use_ldap'] {
     $heat_hash = {}
   } else {
-    $heat_hash_raw = $::fuel_settings['heat']
+    if ! $::fuel_settings['keystone_ldap']['use_ldap'] {
+      $heat_hash = $::fuel_settings['heat']
+    } else {
+      $heat_hash_raw = $::fuel_settings['heat']
+    }
   }
 
   if !$::fuel_settings['ceilometer'] and !$::fuel_settings['keystone_ldap']['use_ldap'] {
@@ -108,6 +120,8 @@ class osnailyfacter::cluster_ha {
     $cinder_hash     = merge($cinder_hash_raw,     {'user_password' => $::fuel_settings['keystone_ldap']['ldap_service_users_pass']})
     $ceilometer_hash = merge($ceilometer_hash_raw, {'user_password' => $::fuel_settings['keystone_ldap']['ldap_service_users_pass']})
     $heat_hash       = merge($heat_hash_raw,       {'user_password' => $::fuel_settings['keystone_ldap']['ldap_service_users_pass']})
+    $murano_hash     = merge($murano_hash_raw,     {'user_password' => $::fuel_settings['keystone_ldap']['ldap_service_users_pass']})
+    $sahara_hash     = merge($sahara_hash_raw,     {'user_password' => $::fuel_settings['keystone_ldap']['ldap_service_users_pass']})
   } else {
     $nova_hash       = $nova_hash_raw
     $glance_hash     = $glance_hash_raw
@@ -115,6 +129,8 @@ class osnailyfacter::cluster_ha {
     $cinder_hash     = $cinder_hash_raw
     $ceilometer_hash = $ceilometer_hash_raw
     $heat_hash       = $heat_hash_raw
+    $murano_hash       = $heat_hash_raw
+    $sahara_hash       = $heat_hash_raw
   }
 
   if !$rabbit_hash['user'] {

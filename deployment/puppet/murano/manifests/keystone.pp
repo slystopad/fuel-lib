@@ -5,7 +5,7 @@ class murano::keystone (
   $email    = 'murano@localhost'
 ) {
 
-  if ! $::fuel_settings['keystone']['use_ldap'] {
+  if ! $::fuel_settings['keystone_ldap']['use_ldap'] {
     keystone_user { $user:
       ensure      => present,
       enabled     => true,
@@ -13,11 +13,10 @@ class murano::keystone (
       email       => $email,
       password    => $password,
     }
-  
-    keystone_user_role { "${user}@${tenant}":
-      roles  => 'admin',
-      ensure => present,
-    }
   }
-
+  
+  keystone_user_role { "${user}@${tenant}":
+    roles  => 'admin',
+    ensure => present,
+  }
 }

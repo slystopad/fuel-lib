@@ -17,7 +17,6 @@ class sahara::keystone::auth (
       email    => $email,
       tenant   => $tenant,
     }
-  
   }
 
   keystone_user_role { "${auth_name}@${tenant}":
