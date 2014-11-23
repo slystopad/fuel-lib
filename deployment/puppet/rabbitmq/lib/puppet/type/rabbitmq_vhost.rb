@@ -11,13 +11,10 @@ Puppet::Type.newtype(:rabbitmq_vhost) do
     end
   end
 
+  autorequire(:service) { 'rabbitmq-server' }
+
   newparam(:name, :namevar => true) do
     'name of the vhost to add'
-    newvalues(/^\S+$/)
-  end
-
-end
-host to add'
     newvalues(/^\S+$/)
   end
 
