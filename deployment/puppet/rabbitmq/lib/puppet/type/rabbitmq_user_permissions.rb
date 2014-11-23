@@ -11,8 +11,10 @@ Puppet::Type.newtype(:rabbitmq_user_permissions) do
     end
   end
 
+  autorequire(:service) { 'rabbitmq-server' }
+
   newparam(:name, :namevar => true) do
-    'combination of user@vhost to grant privileges to'
+    desc 'combination of user@vhost to grant privileges to'
     newvalues(/^\S+@\S+$/)
   end
 
@@ -51,11 +53,6 @@ Puppet::Type.newtype(:rabbitmq_user_permissions) do
       Regexp.new(value)
     rescue RegexpError
       raise ArgumentError, "Invalid regexp #{value}"
-    end
-  end
-
-end
-Error, "Invalid regexp #{value}"
     end
   end
 

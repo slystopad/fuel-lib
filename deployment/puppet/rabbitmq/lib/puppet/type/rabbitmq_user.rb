@@ -11,6 +11,8 @@ Puppet::Type.newtype(:rabbitmq_user) do
     end
   end
 
+  autorequire(:service) { 'rabbitmq-server' }
+
   newparam(:name, :namevar => true) do
     desc 'Name of user'
     newvalues(/^\S+$/)
@@ -31,14 +33,12 @@ Puppet::Type.newtype(:rabbitmq_user) do
     defaultto :false
   end
 
-  validate do
-    if self[:ensure] == :present and ! self[:password]
-      raise ArgumentError, 'must set password when creating user' unless self[:password]
-    end
+  newproperty(:tags, :array_matching => :all) do
+    desc 'additional tags for the user'
   end
 
-end
- == :present and ! self[:password]
+  validate do
+    if self[:ensure] == :present and ! self[:password]
       raise ArgumentError, 'must set password when creating user' unless self[:password]
     end
   end
