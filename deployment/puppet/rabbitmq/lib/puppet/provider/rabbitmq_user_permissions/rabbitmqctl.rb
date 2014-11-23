@@ -101,3 +101,12 @@ Puppet::Type.type(:rabbitmq_user_permissions).provide(:rabbitmqctl) do
   end
 
 end
+_permission
+      rabbitmqctl('set_permissions', '-p', should_vhost, should_user,
+        resource[:configure_permission], resource[:write_permission],
+        resource[:read_permission]
+      )
+    end
+  end
+
+end

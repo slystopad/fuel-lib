@@ -17,3 +17,8 @@ Puppet::Type.newtype(:rabbitmq_vhost) do
   end
 
 end
+host to add'
+    newvalues(/^\S+$/)
+  end
+
+end

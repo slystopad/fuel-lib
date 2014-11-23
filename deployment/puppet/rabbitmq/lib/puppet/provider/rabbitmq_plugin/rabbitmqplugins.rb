@@ -28,3 +28,35 @@ Puppet::Type.type(:rabbitmq_plugin).provide(:rabbitmqplugins) do
   end
 
 end
+
+  end
+
+  defaultfor :feature => :posix
+
+  def self.instances
+    self.wait_for_online
+    rabbitmqplugins('list', '-E').split(/\n/).map do |line|
+      if line.split(/\s+/)[1] =~ /^(\S+)$/
+        new(:name => $1)
+      else
+        raise Puppet::Error, "Cannot parse invalid plugins line: #{line}"
+      end
+    end
+  end
+
+  def create
+    rabbitmqplugins('enable', resource[:name])
+  end
+
+  def destroy
+    rabbitmqplugins('disable', resource[:name])
+  end
+
+  def exists?
+    self.class.wait_for_online
+    rabbitmqplugins('list', '-E').split(/\n/).detect do |line|
+      line.split(/\s+/)[1].match(/^#{resource[:name]}$/)
+    end
+  end
+
+end
