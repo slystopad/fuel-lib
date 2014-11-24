@@ -33,12 +33,12 @@ class glance::keystone::auth(
   $admin_protocol     = 'http',
   $internal_protocol  = 'http'
 ) {
+  
+  Keystone_user_role["${auth_name}@${tenant}"] ~> Service <| name == 'glance-api' |>
+  Keystone_endpoint["${region}/${auth_name}"]  ~> Service <| name == 'glance-api' |>
+  Keystone_user_role["${auth_name}@${tenant}"] ~> Service <| name == 'glance-registry' |>
 
   if ! $::fuel_settings['keystone_ldap']['use_ldap'] {
-    Keystone_user_role["${auth_name}@${tenant}"] ~> Service <| name == 'glance-registry' |>
-    Keystone_user_role["${auth_name}@${tenant}"] ~> Service <| name == 'glance-api' |>
-    Keystone_endpoint["${region}/${auth_name}"]  ~> Service <| name == 'glance-api' |>
-  
     keystone_user { $auth_name:
       ensure   => present,
       password => $password,
