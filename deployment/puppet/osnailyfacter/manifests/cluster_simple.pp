@@ -625,6 +625,5 @@ class osnailyfacter::cluster_simple {
     mysql_server_pkg => $::galera::params::mysql_server_name,
   }
 
-
 } # CLUSTER_SIMPLE ENDS
 # vim: set ts=2 sw=2 et :
