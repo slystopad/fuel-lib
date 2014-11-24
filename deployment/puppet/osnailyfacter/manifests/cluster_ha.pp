@@ -54,7 +54,7 @@ class osnailyfacter::cluster_ha {
     }
   }
 
-  if !$::fuel_settings['heat'] and !$::fuel_settings['keystone_ldap']['use_ldap'] {
+  if !$::fuel_settings['heat'] {
     $heat_hash = {}
   } else {
     if ! $::fuel_settings['keystone_ldap']['use_ldap'] {
@@ -64,7 +64,7 @@ class osnailyfacter::cluster_ha {
     }
   }
 
-  if !$::fuel_settings['ceilometer'] and !$::fuel_settings['keystone_ldap']['use_ldap'] {
+  if !$::fuel_settings['ceilometer'] {
     $ceilometer_hash = {
       enabled => false,
       db_password => 'ceilometer',
@@ -72,7 +72,11 @@ class osnailyfacter::cluster_ha {
       metering_secret => 'ceilometer',
     }
   } else {
-    $ceilometer_hash_raw = $::fuel_settings['ceilometer']
+    if ! $::fuel_settings['keystone_ldap']['use_ldap'] {
+      $ceilometer_hash = $::fuel_settings['ceilometer']
+    } else {
+      $ceilometer_hash_raw = $::fuel_settings['ceilometer']
+    }
   }
 
 
