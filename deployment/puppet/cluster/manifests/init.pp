@@ -42,6 +42,15 @@ class cluster (
     Package['pacemaker'] -> File['ns-ipaddr2-ocf']
     File<| title == 'ocf-mirantis-path' |> -> File['ns-ipaddr2-ocf']
 
+    file {'initscript-corosync':
+      path   =>'/etc/init.d/corosync',
+      mode   => '0755',
+      owner  => root,
+      group  => root,
+      source => "puppet:///modules/corosync/corosync",
+    }
+    Package['corosync'] -> File['initscript-corosync']
+
 }
 #
 ###
