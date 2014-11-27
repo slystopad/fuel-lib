@@ -16,7 +16,7 @@ class cluster::haproxy (
   #  upstream manifests must be kept intact
   $global_options   = {
     'log'     => '/dev/log local0',
-    'pidfile' => '/var/run/haproxy.pid',
+    'pidfile' => '/var/run/haproxy-ocf.pid',
     'maxconn' => $haproxy_maxconn,
     'user'    => 'haproxy',
     'group'   => 'haproxy',
@@ -42,4 +42,14 @@ class cluster::haproxy (
   if defined(Corosync::Service['pacemaker']) {
     Corosync::Service['pacemaker'] -> Class['cluster::haproxy_ocf']
   }
+
+  file {'initscript-haproxy':
+      path   =>'/etc/init.d/haproxy',
+      mode   => '0755',
+      owner  => root,
+      group  => root,
+      source => "puppet:///modules/cluster/haproxy.init",
+  }
+  Package['haproxy'] -> File['initscript-haproxy']
+
 }

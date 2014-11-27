@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# This is dirty hack.
+# In HA deployment mode haproxy is managed by pacemaker
+#
+exit 0

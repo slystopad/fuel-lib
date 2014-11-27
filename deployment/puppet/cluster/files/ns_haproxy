@@ -37,7 +37,7 @@ OCF_ROOT_default="/usr/lib/ocf"
 
 OCF_RESKEY_ns_default="haproxy"
 OCF_RESKEY_conffile_default="/etc/haproxy/haproxy.cfg"
-OCF_RESKEY_pidfile_default="/var/run/haproxy.pid"
+OCF_RESKEY_pidfile_default="/var/run/haproxy-ocf.pid"
 OCF_RESKEY_binpath_default="/usr/sbin/haproxy"
 OCF_RESKEY_extraconf_default=""
 
