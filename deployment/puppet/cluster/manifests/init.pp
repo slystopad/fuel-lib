@@ -51,6 +51,8 @@ class cluster (
     }
     Package['corosync'] -> File['initscript-corosync']
 
+    include corosync::online
+
 }
 #
 ###
