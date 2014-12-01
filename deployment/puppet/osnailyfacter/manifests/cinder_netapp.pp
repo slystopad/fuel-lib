@@ -64,23 +64,23 @@ define osnailyfacter::cinder_netapp::netapp (
     "${volume_backend_name}/netapp_server_port":           value => $netapp_server_port;
     "${volume_backend_name}/netapp_storage_family":        value => $netapp_storage_family;
     "${volume_backend_name}/netapp_storage_protocol":      value => $netapp_storage_protocol;
-    "${volume_backend_name}/netapp_volume_list":           value => $netapp_volume_list;
-    "${volume_backend_name}/netapp_vserver":               value => $netapp_vserver;
+    "${volume_backend_name}/netapp_controller_ips":        value => $netapp_controller_ips;
+    "${volume_backend_name}/netapp_storage_pools":         value => $netapp_storage_pools;
+    "${volume_backend_name}/netapp_transport_type":        value => $netapp_transport_type;
   }
 
   #cinder_config {
     #"${volume_backend_name}/netapp_size_multiplier":       value => $netapp_size_multiplier;
-    #"${volume_backend_name}/netapp_transport_type":        value => $netapp_transport_type;
     #"${volume_backend_name}/netapp_vfiler":                value => $netapp_vfiler;
     #"${volume_backend_name}/expiry_thres_minutes":         value => $expiry_thres_minutes;
     #"${volume_backend_name}/thres_avl_size_perc_start":    value => $thres_avl_size_perc_start;
     #"${volume_backend_name}/thres_avl_size_perc_stop":     value => $thres_avl_size_perc_stop;
     #"${volume_backend_name}/nfs_shares_config":            value => $nfs_shares_config;
     #"${volume_backend_name}/netapp_copyoffload_tool_path": value => $netapp_copyoffload_tool_path;
-    #"${volume_backend_name}/netapp_controller_ips":        value => $netapp_controller_ips;
     #"${volume_backend_name}/netapp_sa_password":           value => $netapp_sa_password;
-    #"${volume_backend_name}/netapp_storage_pools":         value => $netapp_storage_pools;
     #"${volume_backend_name}/netapp_webservice_path":       value => $netapp_webservice_path;
+    #"${volume_backend_name}/netapp_volume_list":           value => $netapp_volume_list;
+    #"${volume_backend_name}/netapp_vserver":               value => $netapp_vserver;
   #}
 }
 

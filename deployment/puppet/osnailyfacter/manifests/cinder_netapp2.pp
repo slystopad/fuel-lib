@@ -10,11 +10,11 @@ class osnailyfacter::cinder_netapp2 (
            netapp_password => $netapp_cfg['netapp_password'],
            netapp_server_hostname => $netapp_cfg['netapp_server_hostname'],
            netapp_server_port => $netapp_cfg['netapp_server_port'],
-           netapp_storage_family => $netapp_cfg['netapp_storage_family'],
-           netapp_storage_protocol => $netapp_cfg['netapp_storage_protocol'],
-           netapp_volume_list => $netapp_cfg['netapp_volume_list'],
-           netapp_vserver => $netapp_cfg['netapp_vserver'],
-           #volume_backend_name => $netapp_cfg['volume_backend_name'],
+           netapp_storage_family => 'eseries',
+           netapp_storage_protocol => 'iscsi',
+           netapp_transport_type => 'https',
+           netapp_controller_ips => $netapp_cfg['netapp_controller_ips'],
+           netapp_storage_pools => $netapp_cfg['netapp_storage_pools'],
         }
 }
 
