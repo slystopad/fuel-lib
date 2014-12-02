@@ -145,6 +145,7 @@ class nova::compute::libvirt (
     'DEFAULT/vncserver_listen': value => $vncserver_listen;
     'libvirt/virt_type':        value => $libvirt_virt_type_real;
     'libvirt/cpu_mode':         value => $libvirt_cpu_mode_real;
+    'libvirt/inject_password':  value => 'True';
   }
 
   if size($libvirt_disk_cachemodes) > 0 {
