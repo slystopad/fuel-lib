@@ -525,6 +525,7 @@ class osnailyfacter::cluster_simple {
         nova_service_down_time         => $::nova_service_down_time,
         cinder_rate_limits             => $::cinder_rate_limits,
         libvirt_vif_driver             => $libvirt_vif_driver,
+        vhost_net                      => true,
       }
       nova_config { 'DEFAULT/start_guests_on_host_boot': value => $::fuel_settings['start_guests_on_host_boot'] }
       nova_config { 'DEFAULT/use_cow_images': value => $::fuel_settings['use_cow_images'] }
