@@ -126,6 +126,7 @@ class openstack::compute (
   $ceilometer                     = false,
   $ceilometer_metering_secret     = 'ceilometer',
   $libvirt_vif_driver             = 'nova.virt.libvirt.vif.LibvirtGenericVIFDriver',
+  $vhost_net                      = false,
 ) {
 
   #
@@ -592,5 +593,13 @@ on packages update": }
         package_name => 'cinder-volume',
       }
     }
+  }
+
+  ####### Load vhost_net kernel module to improve VM to VM networking performance #######
+  if $vhost_net {
+    notify { 'Loading vhost_net kernel module':
+      withpath => true,
+    }
+    operatingsystem::kern_module { 'vhost_net': ensure => present }
   }
 }

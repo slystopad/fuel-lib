@@ -778,6 +778,7 @@ class osnailyfacter::cluster_ha {
         nova_service_down_time      => $::nova_service_down_time,
         state_path                  => $nova_hash[state_path],
         libvirt_vif_driver          => $libvirt_vif_driver,
+        vhost_net                   => true,
       }
 
       if ($::use_ceph){
