@@ -16,4 +16,10 @@ class openstack::ha::ldap {
     balancermember_options => 'check fall 1 rise 1 inter 2s',
   }
 
+  firewall {'389 LDAP for keystone':
+    port   => 389,
+    proto  => 'tcp',
+    action => 'accept',
+  }
+
 }
