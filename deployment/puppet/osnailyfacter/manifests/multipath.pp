@@ -10,9 +10,9 @@ class osnailyfacter::multipath (
           ensure => 'present';
         }
 
-        ## TODO: add Nova_config ~> Service['nova-api']. What is correct name for service?
-        ## should use param.pp to obtain correct service names
-        nova_config { 'DEFAULT/iscsi_use_multipath': value => 'true' } ~> Service<| title == 'openstack-nova-api'|>
+        ### TODO: add Nova_config ~> Service['nova-api']. What is correct name for service?
+        ### should use param.pp to obtain correct service names
+        #nova_config { 'DEFAULT/iscsi_use_multipath': value => 'true' } ~> Service<| title == 'openstack-nova-api'|>
 
 	file {'multipath.conf':
 	   path   =>'/etc/multipath.conf',

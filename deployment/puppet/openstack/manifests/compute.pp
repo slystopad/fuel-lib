@@ -604,5 +604,9 @@ on packages update": }
   }
 
   ####### Configure multipath for storage ########
-  class {'osnailyfacter::multipath':}
+  class {'osnailyfacter::multipath':} ->
+  ## TODO: add Nova_config ~> Service['nova-api']. What is correct name for service?
+  ## should use param.pp to obtain correct service names
+  nova_config { 'DEFAULT/iscsi_use_multipath': value => 'true' } ~> Service<| title == 'openstack-nova-compute'|>
+
 }
