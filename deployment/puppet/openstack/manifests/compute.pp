@@ -278,6 +278,7 @@ class openstack::compute (
     neutron_enabled               => false,
     instance_usage_audit          => $instance_usage_audit,
     instance_usage_audit_period   => $instance_usage_audit_period,
+    network_device_mtu            => 9000,
   }
 
   nova_config {

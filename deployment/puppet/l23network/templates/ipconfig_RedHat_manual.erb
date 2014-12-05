@@ -9,9 +9,7 @@ VLAN=yes
 VLAN_NAME_TYPE=VLAN_PLUS_VID_NO_PAD
 PHYSDEV=<%= @vlan_dev %>
 <% end -%>
-<% if @mtu -%>
-MTU=<%= @mtu %>
-<% end -%>
+MTU=9000
 <% if @macaddr -%>
 MACADDR=<%= @macaddr.upcase %>
 <% end -%>
