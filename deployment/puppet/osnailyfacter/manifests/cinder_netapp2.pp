@@ -1,6 +1,12 @@
 class osnailyfacter::cinder_netapp2 (
   $netapp_cfg   = $::fuel_settings['netapp']
 ){
+
+        class {'osnailyfacter::multipath':} ->
+        ## TODO: add Nova_config ~> Service['nova-api']. What is correct name for service?
+        ## should use param.pp to obtain correct service names
+        nova_config { 'DEFAULT/iscsi_use_multipath': value => 'true' } ~> Service<| title == 'openstack-nova-api'|>
+
         package {'iscsi-initiator-utils.x86_64':
           ensure => 'present';
         } ->
@@ -15,6 +21,7 @@ class osnailyfacter::cinder_netapp2 (
            netapp_transport_type => 'https',
            netapp_controller_ips => $netapp_cfg['netapp_controller_ips'],
            netapp_storage_pools => $netapp_cfg['netapp_storage_pools'],
+           use_multipath_for_image_xfer => 'True',
         }
 }
 

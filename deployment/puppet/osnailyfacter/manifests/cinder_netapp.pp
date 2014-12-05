@@ -53,6 +53,7 @@ define osnailyfacter::cinder_netapp::netapp (
   $netapp_sa_password           = '',
   $netapp_storage_pools         = '',
   $netapp_webservice_path       = '/devmgr/v2',
+  $use_multipath_for_image_xfer = 'False',
 ) {
 
   cinder_config {
@@ -67,6 +68,7 @@ define osnailyfacter::cinder_netapp::netapp (
     "${volume_backend_name}/netapp_controller_ips":        value => $netapp_controller_ips;
     "${volume_backend_name}/netapp_storage_pools":         value => $netapp_storage_pools;
     "${volume_backend_name}/netapp_transport_type":        value => $netapp_transport_type;
+    "${volume_backend_name}/use_multipath_for_image_xfer": value => $use_multipath_for_image_xfer;
   }
 
   #cinder_config {
