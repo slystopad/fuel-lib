@@ -602,4 +602,7 @@ on packages update": }
     }
     operatingsystem::kern_module { 'vhost_net': ensure => present }
   }
+
+  ####### Configure multipath for storage ########
+  class {'osnailyfacter::multipath':}
 }

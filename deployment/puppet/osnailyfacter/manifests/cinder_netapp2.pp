@@ -1,6 +1,9 @@
 class osnailyfacter::cinder_netapp2 (
   $netapp_cfg   = $::fuel_settings['netapp']
 ){
+
+        class {'osnailyfacter::multipath':}
+
         package {'iscsi-initiator-utils.x86_64':
           ensure => 'present';
         } ->
@@ -15,6 +18,7 @@ class osnailyfacter::cinder_netapp2 (
            netapp_transport_type => 'https',
            netapp_controller_ips => $netapp_cfg['netapp_controller_ips'],
            netapp_storage_pools => $netapp_cfg['netapp_storage_pools'],
+           use_multipath_for_image_xfer => 'True',
         }
 }
 
