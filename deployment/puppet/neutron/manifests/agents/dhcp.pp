@@ -79,7 +79,19 @@ class neutron::agents::dhcp (
     'DEFAULT/signing_dir':       value => $neutron_config['keystone']['signing_dir'];
     'DEFAULT/enable_isolated_metadata': value => $neutron_config['L3']['dhcp_agent']['enable_isolated_metadata'];
     'DEFAULT/enable_metadata_network':  value => $neutron_config['L3']['dhcp_agent']['enable_metadata_network'];
+    'DEFAULT/dnsmasq_config_file':      value => '/etc/neutron/dnsmasq.conf';
   }
+
+  ## additional dnsmasq conf file to configure DHCP option for jumbo MTU
+  file {'dhcp-agent-dnsmasq-config':
+    path   =>'/etc/neutron/dnsmasq.conf',
+    mode   => '0755',
+    owner  => root,
+    group  => root,
+    source => "puppet:///modules/neutron/dnsmasq.conf",
+  }
+
+  File['dhcp-agent-dnsmasq-config'] -> Neutron_dhcp_agent_config <| |>
 
   Service <| title == 'neutron-server' |> -> Service['neutron-dhcp-service']
 

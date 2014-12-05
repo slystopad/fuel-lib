@@ -26,7 +26,5 @@ DNS2=<%= @dns_nameservers_2 %>
 <% if @dns_search_string -%>
 SEARCH=<%= @dns_search_string %>
 <% end -%>
-<% if @mtu -%>
-MTU=<%= @mtu %>
-<% end -%>
+MTU=9000
 <%= scope.function_template(['l23network/bonding_RedHat.erb']) %>

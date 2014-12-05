@@ -144,6 +144,7 @@ class neutron::plugins::ml2 (
     'ml2/tenant_network_types':             value => join($tenant_network_types, ',');
     'ml2/mechanism_drivers':                value => join($mechanism_drivers, ',');
     'securitygroup/enable_security_group':  value => $enable_security_group;
+    'agent/veth_mtu':                       value => 9000;
   }
 
   if ('linuxbridge' in $mechanism_drivers) {
